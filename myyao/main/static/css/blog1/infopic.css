@@ -24,7 +24,7 @@
 .contextDiv { cursor: pointer; height: 100%; width: 50%; position: absolute; top: 0px; z-index: 5; }
 .contextDiv span { position: absolute; top: 50%; margin-top: -10%; width: 46px; height: 80px; }
 #preArrow_A { left: 0px; background: url(../../images/blog1/left.png) 0px 0px no-repeat; display: none; }
-#nextArrow_A { right: 0px; background: url(/../../images/blog1/right.png) 0px 0px no-repeat; display: none; }
+#nextArrow_A { right: 0px; background: url(../../images/blog1/right.png) 0px 0px no-repeat; display: none; }
 .picshowtxt { min-height: 40px; _height: 40px; }
 .picshowtxt_left { float: left; width: 50px; height: 50px; line-height: 50px; font-family: Georgia, "Times New Roman", Times, serif; }
 .picshowtxt_left span { color: #e55656; font-size: 30px; }
