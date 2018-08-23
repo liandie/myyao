@@ -9,12 +9,63 @@
 @file: views.py
 @time: 2018/4/13 20:37
 """
-
+import time
+import json
+from django.db import connection
+from django.http import JsonResponse
+from .models import Countdown
+from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import render
+
 
 def page_error(request):
     return render(request, '404.html')
 
+def set(request):
+    return render(request, 'search/index.html')
+
+def regist(request):
+    rec = 0
+    try:
+        input1 = request.POST['input1']
+        try:
+            ti = time.strptime(input1+':59', '%Y-%m-%d %H:%M:%S')
+            years,months,days = int(ti[0]),int(ti[1]),int(ti[2])
+            hours,minutes,seconds = int(ti[3]),int(ti[4]),int(ti[5])
+            try:
+                obj = Countdown.objects.get(id=1)
+                obj.years,obj.months,obj.days = years,months,days
+                obj.hours,obj.minutes,obj.seconds = hours,minutes,seconds
+                obj.save()
+                rec = 1
+                print('1111111111111111111111111111111111111111')
+            except Countdown.DoesNotExist:
+                Countdown.objects.create(years=0,months=0,days=1,hours=1,minutes=1,seconds=1)
+                rec = 1
+        except ValueError as e:
+            rec = 0
+    except MultiValueDictKeyError as e:
+        rec = 0
+    name_dict = {'rec': rec}
+    return JsonResponse(name_dict)
+
+def countdown(request):
+    info = list(Countdown.objects.filter(id=1))
+    if len(info) <= 0:
+        return render(request, 'search/index.html')
+    else:
+        count = []
+        count.append(info[0].years)
+        count.append(info[0].months)
+        count.append(info[0].days)
+        count.append(info[0].hours)
+        count.append(info[0].minutes)
+        count.append(info[0].seconds)
+        print(count)
+    return render(request, 'countdown/index.html',{'count':count})
+
+def menu(request):
+    return render(request, 'menu/index.html')
 
 def girl(request):
     return render(request, 'girl/girl.html')

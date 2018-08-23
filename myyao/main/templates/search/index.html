@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			{% load staticfiles %}
+		<meta charset="utf-8">
+		<title>设置时间</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="{% static 'js/search/jquery-1.10.2.js' %}"></script>
+		<script src="{% static 'js/search/jquery.min.js' %}"></script>
+		<script src="{% static 'js/search/index.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/search/shijian.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/search/style.css' %}"/>
+		<link type="text/css" rel="stylesheet" href="{% static 'css/search/uiAlertView-1.0.0.css' %}" />
+        <script type="text/javascript" src="{% static 'js/search/jquery.uiAlertView-1.0.0.js' %}"></script>
+	<style>
+		#text_h1{
+	width: 236px;;
+	height: 112px;
+	text-align: center;
+	margin: auto;
+	padding: 24px 0;
+	position: absolute;
+	  top: -180px; bottom: 0; left: 0; right: 0;
+	}
+	
+	#login_click{ margin-top:32px; height:40px;}
+        #login_click a 
+        {
+        text-decoration:none;
+          background:#88aed3;;
+          color:#000000;  
+          padding: 10px 30px 10px 30px;
+          font-size:25px;
+          font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+          font-weight:bold;
+          border-radius:3px;
+          -webkit-transition:all linear 0.30s;
+          -moz-transition:all linear 0.30s;
+          transition:all linear 0.30s;
+          }
+           #login_click a:hover { background:#6a97c4; }
+	</style>
+	</head>
+	<body>
+		<div id="login_click">
+			<a id="btlogin" href="time">进入倒计时</a>
+		</div>
+		<h1 id="text_h1">设置结束的时间</h1>
+		<div class="panel"> 
+			<div class="wrap">
+				{% csrf_token %}
+			<input type="text" id="input1" placeholder="" value=""/>
+			<button onclick="ajaxLogin();">提交</button>
+		</div>
+	</div>
+	</body>
+	<script src="{% static 'js/search/jquer_shijian.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$("#input1").shijian()
+	</script>
+</html>

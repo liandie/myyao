@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+{% load staticfiles %}
+  <meta charset="UTF-8">
+
+  <title>考研倒计时</title>
+  <script src="{% static 'js/countdown/weixin.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/countdown/style.css' %}" media="screen" type="text/css" />
+    <style>
+
+        #login_click{ margin-top:32px; height:40px;}
+        #login_click a 
+        {
+            
+         
+            text-decoration:none;
+          background:#e2edef;
+          color:#000000;
+          
+          padding: 10px 30px 10px 30px;
+          font-size:25px;
+          font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+          font-weight:bold;
+          border-radius:3px;
+          
+          -webkit-transition:all linear 0.30s;
+          -moz-transition:all linear 0.30s;
+          transition:all linear 0.30s;
+          
+          }
+           #login_click a:hover { background:#385f9e; }
+         
+        </style>
+</head>
+
+<body>
+    <div id="login_click">
+        <a id="btlogin" href="set">设 置</a>
+  </div>
+  <h1 id="text_h1">考研预报名倒计时</h1>
+  <div id="countdown">
+  <div id='tiles'></div>
+  <div class="labels">
+    <li>天</li>
+    <li>时</li>
+    <li>分</li>
+    <li>秒</li>
+  </div>
+  </div>
+  <audio autoplay="autoplay" loop="loop" id="bgm">
+    <source src="{% static 'music/love.mp3' %}" type="audio/mpeg" />
+  </audio>
+  <script src="{% static 'js/countdown/jquery.js' %}"></script>
+
+  <!-- <script src="{% static 'js/countdown/index.js' %}"></script> -->
+<div style="text-align:center;clear:both;">
+<!-- <script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script> -->
+</div>
+</body>
+<script>
+  document.addEventListener('click', function(){
+    var music = document.getElementById('bgm');
+    if(music!==null){             
+    //检测播放是否已暂停.audio.paused 在播放器播放时返回false.
+    if(music.paused)                     {                 
+      music.play();//audio.play();// 这个就是播放  
+    }else{
+      music.pause();// 这个就是暂停
+    }
+ } 
+})
+  $(function() {
+
+
+      var music = document.getElementById('bgm');
+      var state = 0;
+      document.addEventListener('touchstart', function(){
+          if(state==0){
+              music.play();
+              state=1;
+          }
+      }, false);
+  
+      document.addEventListener("WeixinJSBridgeReady", function () {
+          music.play();
+      }, false);
+      //循环播放
+      music.onended = function () {
+          music.load();
+          music.play();
+      }
+
+
+  var List = {{ count|safe }};
+  var year=List[0],month=List[1]-1,day=List[2],hour=List[3],minute=List[4],second=List[5];
+  var day2 = new Date(year,month,day,hour,minute,second);
+  var day1 = new Date();
+  var dateDiff = day2.getTime() - day1.getTime();//时间差的毫秒数
+  var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+	var countdown = document.getElementById("tiles");
+	getCountdown();
+	setInterval(function () { getCountdown(); }, 1000);
+	function getCountdown(){
+        if ((dateDiff/1000)<=60){
+        window.location.href='set';
+      }else{
+        var leftTime = (new Date(year,month,day,hour,minute,second)) - (new Date()); //计算剩余的毫秒数 
+		var days = pad(parseInt(leftTime / 1000 / 60 / 60 / 24 , 10)); //计算剩余的天数 
+		var hours = pad(parseInt(leftTime / 1000 / 60 / 60 % 24 , 10)); //计算剩余的小时 
+		var minutes = pad(parseInt(leftTime / 1000 / 60 % 60, 10));//计算剩余的分钟 
+		var seconds = pad(parseInt(leftTime / 1000 % 60, 10));//计算剩余的秒数 
+		countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>"; 
+      }
+		
+	}
+	function pad(n) {
+		return (n < 10 ? '0' : '') + n;
+	}
+});
+</script>
+</html>

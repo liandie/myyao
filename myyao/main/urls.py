@@ -18,6 +18,14 @@ handler500 = views.page_error
 
 
 urlpatterns = [
+    url(r'^$',views.menu,name='menu'),
+
+    url(r'^regist/$|^regist$',views.regist,name='regist'),
+
+    url(r'^set/$|^set$',views.set,name='set'),
+
+    url(r'^time/$|^time$',views.countdown,name='countdown'),
+
     url(r'^girl$|^girl/$^',views.girl,name='girl'),
     
     url(r'^boy$|^boy/$',views.boy,name='boy'),
